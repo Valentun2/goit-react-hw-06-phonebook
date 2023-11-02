@@ -1,15 +1,15 @@
 import { ContactItem } from 'components/ContactItem/ContactItem';
 import { useSelector } from 'react-redux';
 
-import { filterContactArr, getContacts } from 'store/selectors';
+import { filterContactArr, getContacts } from 'redux/selectors';
 
 export const ContactList = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(getContacts) ;
 
-  const contactName = useSelector(filterContactArr);
+  const contactName = useSelector(filterContactArr) ;
 
-  const filterArr = contacts.filter(contact =>
-    contact.payload.name
+  const filterArr = contacts.arrContact.filter(contact =>
+    contact.name
       .toLocaleLowerCase()
       .trim()
       .includes(contactName.toLocaleLowerCase().trim())
@@ -20,10 +20,10 @@ export const ContactList = () => {
       {filterArr.map(item => {
         return (
           <ContactItem
-            name={item.payload.name}
-            phone={item.payload.number}
-            key={item.payload.id}
-            id={item.payload.id}
+            name={item.name}
+            phone={item.number}
+            key={item.id}
+            id={item.id}
           />
         );
       })}

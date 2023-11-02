@@ -1,12 +1,11 @@
+import { setFilter } from 'redux/filterSlise';
 import styles from './Filter.module.css';
 import { useDispatch } from 'react-redux';
-import { filterContact } from 'store/action';
 
 export const Filter = () => {
   const dispatch = useDispatch();
-
   const onChange = evt => {
-    dispatch(filterContact(evt.target.value));
+    dispatch(setFilter(evt.target.value));
   };
 
   return (
