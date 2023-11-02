@@ -1,23 +1,24 @@
-import { Component } from 'react';
 import styles from './Filter.module.css';
+import { useDispatch } from 'react-redux';
+import { filterContact } from 'store/action';
 
-export class Filter extends Component {
-  onChange = evt => {
-    this.props.contactFilter(evt.target.value);
+export const Filter = () => {
+  const dispatch = useDispatch();
+
+  const onChange = evt => {
+    dispatch(filterContact(evt.target.value));
   };
 
-  render() {
-    return (
-      <label className={styles.labelFilter}>
-        Find contact by name
-        <input
-          className={styles.inputFilter}
-          type="text"
-          name="filter"
-          onChange={this.onChange}
-          pattern="^[a-zA-Z]+$"
-        />
-      </label>
-    );
-  }
-}
+  return (
+    <label className={styles.labelFilter}>
+      Find contact by name
+      <input
+        className={styles.inputFilter}
+        type="text"
+        name="filter"
+        onChange={onChange}
+        pattern="^[a-zA-Z]+$"
+      />
+    </label>
+  );
+};

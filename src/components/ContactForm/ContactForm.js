@@ -1,54 +1,32 @@
-import { useState } from 'react';
 import styles from './ContactForm.module.css';
+import { useDispatch } from 'react-redux';
+import { addContact } from 'store/action';
 
-export const ContactForm = (props) =>{
-
-const [name, setName] = useState('');
-const [number, setNumber] = useState('');
-
-const onChange = evt => {
-  if(evt.target.name === 'name'){
- setName(evt.target.value)
-return
-}
-setNumber(evt.target.value) 
-  };
+export const ContactForm = () => {
+  const dispatch = useDispatch();
 
   const onSubmit = evt => {
     evt.preventDefault();
-    props.createContact({
-      name,
-      number
-    });
+    const arr = {
+      name: evt.target.name.value,
+      number: evt.target.number.value,
+    };
 
+    dispatch(addContact(arr));
     evt.target.reset();
   };
 
- 
-    return (
-      <form onSubmit={onSubmit}>
-        <label>
-          Name
-          <input
-            type="text"
-            name="name"
-            required
-            onChange={onChange}
-            pattern="^[a-zA-Z]+$"
-          />
-        </label>
-        <label>
-          Number
-          <input
-            type="tel"
-            name="number"
-            required
-            onChange={onChange}
-            pattern="^[ 0-9]+$"
-          />
-        </label>
-        <button className={styles.formButton}>add contact</button>
-      </form>
-    );
-  }
-
+  return (
+    <form onSubmit={onSubmit}>
+      <label>
+        Name
+        <input type="text" name="name" required pattern="^[a-zA-Z]+$" />
+      </label>
+      <label>
+        Number
+        <input type="tel" name="number" required pattern="^[ 0-9]+$" />
+      </label>
+      <button className={styles.formButton}>add contact</button>
+    </form>
+  );
+};

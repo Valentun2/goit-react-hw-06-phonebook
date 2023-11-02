@@ -1,23 +1,32 @@
 import { ContactItem } from 'components/ContactItem/ContactItem';
-import { Component } from 'react';
+import { useSelector } from 'react-redux';
 
-export class ContactList extends Component {
-  render() {
-    
-    return (
-      <ul>
-        {this.props.arr().map(item => {
-          return (
-            <ContactItem
-              name={item.name}
-              phone={item.number}
-              key={item.id}
-              id={item.id}
-              deleteContact={this.props.deleteContact}
-            />
-          );
-        })}
-      </ul>
-    );
-  }
-}
+import { filterContactArr, getContacts } from 'store/selectors';
+
+export const ContactList = () => {
+  const contacts = useSelector(getContacts);
+
+  const contactName = useSelector(filterContactArr);
+
+  const filterArr = contacts.filter(contact =>
+    contact.payload.name
+      .toLocaleLowerCase()
+      .trim()
+      .includes(contactName.toLocaleLowerCase().trim())
+  );
+
+  return (
+    <ul>
+      {filterArr.map(item => {
+        return (
+          <ContactItem
+            name={item.payload.name}
+            phone={item.payload.number}
+            key={item.payload.id}
+            id={item.payload.id}
+          />
+        );
+      })}
+    </ul>
+  );
+};
